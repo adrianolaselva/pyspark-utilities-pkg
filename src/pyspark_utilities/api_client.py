@@ -3,21 +3,24 @@
 from requests import Session
 from pandas import DataFrame
 
+from pyspark_utilities.serializations import DataSerializer, DataFrameSerializer
+
 
 class ApiClient:
     """
     Class api client
     """
 
-    def __init__(self, base_url: str = "https://api.thecatapi.com", headers: dict = None):
-        self.session = Session()
+    def __init__(self,
+                 base_url: str = "https://api.thecatapi.com",
+                 data_serializer: DataSerializer = DataFrameSerializer()):
         self.base_url = base_url
+        self.data_serializer = data_serializer
+
+        self.session = Session()
         self.session.headers.update({
             'Content-Type': 'application/json'
         })
-
-        if headers is not None:
-            self.session.headers.update(headers)
 
     def make_request(self, method: str, endpoint: str, params=None, data=None):
         """
@@ -35,6 +38,6 @@ class ApiClient:
                                     params=params,
                                     data=data)
 
-    def build_response(self, result: dict) -> DataFrame:
-        return DataFrame(result)
+    def build_response(self, data: dict) -> DataFrame:
+        return self.data_serializer.serialize(data)
 
