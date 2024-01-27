@@ -3,6 +3,13 @@
 Package test...
 
 
+## Install
+
+```shell
+python3 -m pip install -e pyspark-utilities-pkg @ git+https://github.com/adrianolaselva/pyspark-utilities-pkg.git
+```
+> install library
+
 ## Example
 
 ```python

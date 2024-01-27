@@ -3,6 +3,9 @@ from setuptools import setup, find_packages
 with open('README.md') as description:
     long_description = description.read()
 
+with open('requirements.txt') as requirements:
+    install_requires = requirements.read().splitlines()
+
 setup(
     name="pyspark-utilities-pkg",
     version="1.0.0",
@@ -30,4 +33,5 @@ setup(
         "License :: OSI Approved :: MIT License"
     ],
     python_requires=">=3.8",
+    install_requires=install_requires,
 )
